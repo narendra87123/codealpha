@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Music Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 40px;
+    }
+    .music-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    h1, h3 {
+      margin: 10px 0;
+    }
+    .controls button {
+      font-size: 24px;
+      margin: 0 15px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .progress-container {
+      background: #ddd;
+      height: 5px;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .progress {
+      background: #007bff;
+      height: 5px;
+      width: 0%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="music-container">
+    <h1 id="title">Title</h1>
+    <h3 id="artist">Artist</h3>
+    <audio id="audio"></audio>
+
+    <div class="controls">
+      <button id="prev">⏮️</button>
+      <button id="play">▶️</button>
+      <button id="next">⏭️</button>
+    </div>
+
+    <div class="progress-container" id="progress-container">
+      <div class="progress" id="progress"></div>
+    </div>
+  </div>
+
+  <script>
+    const songs = [
+      {
+        title: "Acoustic Breeze",
+        artist: "Bensound",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+      },
+      {
+        title: "Creative Minds",
+        artist: "Bensound",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+      },
+      {
+        title: "Sunny",
+        artist: "Bensound",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+      }
+    ];
+
+    const audio = document.getElementById('audio');
+    const title = document.getElementById('title');
+    const artist = document.getElementById('artist');
+    const playBtn = document.getElementById('play');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const progress = document.getElementById('progress');
+    const progressContainer = document.getElementById('progress-container');
+
+    let songIndex = 0;
+    let isPlaying = false;
+
+    function loadSong(song) {
+      title.innerText = song.title;
+      artist.innerText = song.artist;
+      audio.src = song.src;
+    }
+
+    function playSong() {
+      audio.play();
+      isPlaying = true;
+      playBtn.textContent = '⏸️';
+    }
+
+    function pauseSong() {
+      audio.pause();
+      isPlaying = false;
+      playBtn.textContent = '▶️';
+    }
+
+    playBtn.addEventListener('click', () => {
+      isPlaying ? pauseSong() : playSong();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      songIndex = (songIndex - 1 + songs.length) % songs.length;
+      loadSong(songs[songIndex]);
+      playSong();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      loadSong(songs[songIndex]);
+      playSong();
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      progress.style.width = `${progressPercent}%`;
+    });
+
+    progressContainer.addEventListener('click', (e) => {
+      const width = progressContainer.clientWidth;
+      const clickX = e.offsetX;
+      const duration = audio.duration;
+      audio.currentTime = (clickX / width) * duration;
+    });
+
+    audio.addEventListener('ended', () => {
+      nextBtn.click();
+    });
+
+    // Load initial song
+    loadSong(songs[songIndex]);
+  </script>
+</body>
+</html>

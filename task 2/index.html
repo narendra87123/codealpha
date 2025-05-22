@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <button onclick="toggleDarkMode()" class="toggle-dark">🌙</button>
+
+  <div class="calculator">
+    <input type="text" id="display" readonly />
+
+    
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendValue('(')">(</button>
+      <button onclick="appendValue(')')">)</button>
+      <button onclick="deleteLast()">⌫</button>
+
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('/')">÷</button>
+
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('*')">×</button>
+
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('-')">−</button>
+
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="appendValue('+')">+</button>
+
+      <button onclick="appendValue('%')">%</button>
+      <button onclick="appendValue('Math.sqrt(')">√</button>
+      <button onclick="power(2)">x²</button>
+      <button onclick="power(3)">x³</button>
+
+      <button onclick="appendValue('Math.sin(')">sin</button>
+      <button onclick="appendValue('Math.cos(')">cos</button>
+      <button onclick="appendValue('Math.tan(')">tan</button>
+      <button onclick="appendValue('Math.log10(')">log</button>
+
+      <button onclick="appendValue('Math.LN10')">ln</button>
+      <button onclick="appendValue('Math.PI')">π</button>
+      <button onclick="appendValue('Math.E')">e</button>
+      <button onclick="factorial()">x!</button>
+
+      <button onclick="appendValue('[')">[</button>
+      <button onclick="appendValue(']')">]</button>
+      <button onclick="appendValue(';')">;</button>
+      <button onclick="toggleHistory()">📜</button>
+    </div>
+
+    <div id="history" class="history-container hidden">
+      <h2>History</h2>
+      <ul id="historyList"></ul>
+      <button onclick="clearHistory()">Clear</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
